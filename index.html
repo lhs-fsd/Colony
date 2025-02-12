@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lawyers Housing Society - Modern Living</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="icon" href="icon.png">
+  <style>
+    /* Base CSS Variables */
+    :root {
+      --primary-color: #1a73e8;
+      --secondary-color: #0d47a1;
+      --accent-color: #ff6f00;
+      --background-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --section-bg: #ffffff;
+      --navbar-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Dark Theme Variables */
+    .dark-theme {
+      --background-gradient: linear-gradient(360deg, #121212, #1e1e1e);
+      --text-color: #e0e0e0;
+      --card-bg: #1f1f1f;
+      --section-bg: #272727;
+      --navbar-bg: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Global Styles */
+    body {
+      background: var(--background-gradient);
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background: var(--navbar-bg) !important;
+      transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    }
+    .navbar.transparent {
+      background: transparent !important;
+      box-shadow: none;
+    }
+    .navbar.scrolled {
+      background: var(--navbar-bg) !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .navbar.transparent .nav-link,
+    .navbar.transparent .navbar-brand {
+      color: white !important;
+    }
+    .navbar.transparent .theme-toggle {
+      color: white !important;
+    }
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .navbar-brand {
+      color: var(--text-color) !important;
+    }
+    .nav-link {
+      font-weight: 500;
+      margin: 0 15px;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+      transform-origin: left;
+    }
+    .nav-link:hover {
+      transform: translateY(-10px);
+    }
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      transition: transform 0.3s, font-weight 0.3s;
+      font-weight: bold;
+    }
+    .navbar-brand:hover {
+      transform: rotate(360deg);
+    }
+
+    /* Theme Toggle Icon Button */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      padding: 0;
+      color: var(--text-color);
+      transition: color 0.3s ease;
+    }
+    .theme-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      transition: transform 0.5s ease;
+    }
+    .theme-icon.rotate {
+      transform: rotate(135deg);
+    }
+    .d-none {
+      display: none !important;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 5%;
+      color: white;
+    }
+    .hero-section video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+      max-width: 600px;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--secondary-color);
+    }
+
+    /* Cards (Facilities & Team) */
+    .card, .facility-card, .team-card {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .card:hover, .facility-card:hover, .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .facility-card, .team-card {
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .facility-card {
+        height: 10.5rem;
+    }
+
+    .team-card {
+        height: 21rem;
+    }
+
+    .facility-card img, 
+    #team .team-card img {
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+    #team .team-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+    .facility-card img {
+      width: 80px;
+      height: 80px;
+    }
+    /* Section Backgrounds */
+    .section {
+      background: var(--section-bg);
+      padding: 80px 0;
+    }
+
+    /* Map Responsive */
+    .map-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+    .map-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+
+    /* WhatsApp Chat Button */
+    .whatsapp-chat {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366 !important;
+      color: white;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 24px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+      opacity: 1;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* NEW: Carousel Image Wrapper for Equal Sizing and Dark Overlay */
+    .img-wrapper {
+      position: relative;
+      height: 500px; /* fixed height for all carousel images */
+      overflow: hidden;
+    }
+    .img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .img-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4); /* dark overlay with 40% opacity */
+    }
+
+    /* Updated Chairman's Message Styles - Fancy Layout with Animations */
+    #chairman-message {
+      background: var(--section-bg);
+      padding: 80px 0;
+    }
+    .chairman-img-wrapper {
+      display: inline-block;
+      border-radius: 50%;
+      overflow: hidden;
+      width: 150px;
+      height: 150px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0px;
+      opacity: 0;
+      animation: slideInLeft 1s forwards 0.5s;
+      justify-content: right;
+    }
+    .chairman-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .chairman-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+      opacity: 0;
+      animation: fadeIn 1s forwards 1s;
+    }
+    
+    /* Keyframes for custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .chairman-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+
+    .chairman-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    }
+
+    .chairman-img-wrapper:hover .chairman-photo {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    .chairman-img-wrapper .chairman-photo {
+        transition: transform 0.3s ease;
+    }
+
+    .chairman-content {
+        padding: 40px;
+        position: relative;
+    }
+
+    .chairman-quote {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        position: relative;
+        padding-left: 30px;
+        margin: 30px 0;
+    }
+
+    .chairman-signature {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-top: 30px;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(0.8); opacity: 0.3; }
+        50% { transform: scale(1.2); opacity: 0.1; }
+        100% { transform: scale(0.8); opacity: 0.3; }
+    }
+
+    .navbar.transparent .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    /* Mobile devices */
+    @media (max-width: 999px) {
+      .hero-content h1 {
+        font-size: 2.5rem; /* Smaller font size for mobile */
+      }
+
+      .navbar-brand {
+        font-size: 1.2rem; /* Smaller navbar brand on mobile */
+      }
+
+      .facility-card {
+        margin-bottom: 20px; /* Add spacing between cards on mobile */
+        height: 12.5rem;
+      }
+
+      .carousel-controls {
+        display: none; /* Hide carousel controls on mobile */
+      }
+
+      .carousel {
+        height: 30rem; /* Fixed height for mobile */
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .hero-content {
+        padding: 20px; /* Add padding for better spacing */
+      }
+
+      .section-title {
+        font-size: 2rem; /* Smaller section titles on mobile */
+      }
+
+      .facility-card, .team-card {
+        margin-bottom: 25px; /* Add spacing between cards on mobile */
+      }
+      
+      .NIG {
+        margin-top: 0px;
+      }
+
+      .team-card img {
+        width: 100px; /* Smaller team images on mobile */
+        height: 100px;
+      }
+
+      .PSI {
+        padding-top: 0px;
+      }
+
+      .chairman-card {
+        padding: 20px; /* Add padding for better spacing */
+      }
+
+      .chairman-quote {
+        font-size: 1.1rem; /* Smaller font size for chairman's quote on mobile */
+      }
+
+      .chairman-signature {
+        font-size: 1.5rem; /* Smaller signature on mobile */
+      }
+
+      .map-responsive {
+        padding-bottom: 75%; /* Adjust map height for mobile */
+      }
+
+      /* Chairman's Message Layout for Mobile */
+      .chairman-content {
+        padding: 20px;
+      }
+      .chairman-img-wrapper {
+        margin: 0 auto 20px; /* Center the image on mobile */
+      }
+      .chairman-quote {
+        padding-left: 0; /* Remove padding for mobile */
+      }
+
+    }
+
+    /* Larger Screens */
+    @media (min-width: 768px) {
+      .chairman-img-wrapper {
+        float: right; /* Move the image to the right on larger screens */
+        margin-left: 30px; /* Add spacing between text and image */
+      }
+    }
+
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar with Theme Toggle Icon -->
+  <nav id="navbar" class="navbar navbar-expand-lg fixed-top transparent">
+    <div class="container">
+      <a class="navbar-brand" href="#">LHS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chairman-message">Chairman's Message</a></li>
+          <li class="nav-item"><a class="nav-link" href="#location">Location</a></li>
+          <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+        </ul>
+        <!-- Theme Toggle Icon (Bootstrap Icons) -->
+        <button id="theme-toggle" class="theme-toggle ms-2">
+          <span id="theme-icon" class="theme-icon">
+            <!-- Sun Icon (visible in light mode) -->
+            <svg xmlns="http://www.w3.org/2000/svg" id="sun-icon" width="25" height="25" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">
+              <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+            </svg>
+            <!-- Moon Icon (hidden in light mode) -->
+            <svg xmlns="http://www.w3.org/2000/svg" id="moon-icon" width="25" height="25" fill="currentColor" class="d-none bi bi-moon-fill" viewBox="0 0 16 16">
+              <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
+            </svg>          
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <video autoplay muted loop>
+      <source src="Colony.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-content" data-aos="fade-up">
+      <h1 data-aos="fade-down">Welcome to Lawyers Housing Society</h1>
+      <p data-aos="fade-up">Modern Living | Secure Community</p>
+      <a href="#contact" class="btn btn-primary" data-aos="fade-in">Get in Touch</a>
+    </div>
+  </section>
+
+
+
+  <!-- Chairman's Message Section (Updated with Fancy Layout & Animations) -->
+  <section id="chairman-message" class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-12" data-aos="zoom-in">
+                <div class="chairman-card">
+                    <div class="chairman-content rounded">
+                        <div class="row">
+                            <div class="col-md-7 col-12">
+                                <h2 class="section-title">From the Chairman's Desk</h2>
+                            </div>
+                            <div class="col-md-5 col-12">
+                                <div class="chairman-img-wrapper">
+                                    <img src="chairman.jpg" alt="Chairman" class="chairman-photo">
+                                </div> 
+                            </div>
+                        <blockquote class="chairman-quote">
+                            <p>At Lawyers Housing Society, our vision is to construct redefined modern community living, we aim in crafting ecosystems where families thrive, children grow, and dreams find wings.</p>
+                        </blockquote>
+                        <span class="chairman-signature">- Sohail Babar</span>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+  <!-- Facilities Section -->
+  <section id="facilities" class="facilities-section section">
+    <div class="container text-center">
+      <h2 class="section-title" data-aos="fade-down">Our Facilities</h2>
+      <div class="row">
+        <!-- Gated Community -->
+        <div class="col-md-4 col-12" data-aos="fade-up">
+          <div class="facility-card p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-shield-shaded" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 14.933a1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/>
+            </svg>
+            <h5 class="mt-3">Gated Community</h5>
+            <p>24/7 security and controlled access.</p>
+          </div>
+        </div>
+        <!-- Parks & Gardens -->
+        <div class="col-md-4 col-12" data-aos="fade-up" data-aos-delay="100">
+          <div class="facility-card p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-tree-fill" viewBox="0 0 16 16">
+              <path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777z"/>
+            </svg>
+            <h5 class="mt-3">Parks & Gardens</h5>
+            <p>Beautifully landscaped parks.</p>
+          </div>
+        </div>
+        <!-- Greenery -->
+        <div class="col-md-4 col-12" data-aos="fade-up" data-aos-delay="200">
+          <div class="facility-card p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-flower1" viewBox="0 0 16 16">
+                <path d="M6.174 1.184a2 2 0 0 1 3.652 0A2 2 0 0 1 12.99 3.01a2 2 0 0 1 1.826 3.164 2 2 0 0 1 0 3.652 2 2 0 0 1-1.826 3.164 2 2 0 0 1-3.164 1.826 2 2 0 0 1-3.652 0A2 2 0 0 1 3.01 12.99a2 2 0 0 1-1.826-3.164 2 2 0 0 1 0-3.652A2 2 0 0 1 3.01 3.01a2 2 0 0 1 3.164-1.826M8 1a1 1 0 0 0-.998 1.03l.01.091q.017.116.054.296c.049.241.122.542.213.887.182.688.428 1.513.676 2.314L8 5.762l.045-.144c.248-.8.494-1.626.676-2.314.091-.345.164-.646.213-.887a5 5 0 0 0 .064-.386L9 2a1 1 0 0 0-1-1M2 9l.03-.002.091-.01a5 5 0 0 0 .296-.054c.241-.049.542-.122.887-.213a61 61 0 0 0 2.314-.676L5.762 8l-.144-.045a61 61 0 0 0-2.314-.676 17 17 0 0 0-.887-.213 5 5 0 0 0-.386-.064L2 7a1 1 0 1 0 0 2m7 5-.002-.03a5 5 0 0 0-.064-.386 16 16 0 0 0-.213-.888 61 61 0 0 0-.676-2.314L8 10.238l-.045.144c-.248.8-.494 1.626-.676 2.314-.091.345-.164.646-.213.887a5 5 0 0 0-.064.386L7 14a1 1 0 1 0 2 0m-5.696-2.134.025-.017a5 5 0 0 0 .303-.248c.184-.164.408-.377.661-.629A61 61 0 0 0 5.96 9.23l.103-.111-.147.033a61 61 0 0 0-2.343.572c-.344.093-.64.18-.874.258a5 5 0 0 0-.367.138l-.027.014a1 1 0 1 0 1 1.732zM4.5 14.062a1 1 0 0 0 1.366-.366l.014-.027q.014-.03.036-.084a5 5 0 0 0 .102-.283c.078-.233.165-.53.258-.874a61 61 0 0 0 .572-2.343l.033-.147-.11.102a61 61 0 0 0-1.743 1.667 17 17 0 0 0-.629.66 5 5 0 0 0-.248.304l-.017.025a1 1 0 0 0-.366 1.366m9.196-8.196a1 1 0 0 0-1-1.732l-.025.017a5 5 0 0 0-.303.248 17 17 0 0 0-.661.629A61 61 0 0 0 10.04 6.77l-.102.111.147-.033a61 61 0 0 0 2.342-.572c.345-.093.642-.18.875-.258a5 5 0 0 0 .367-.138zM11.5 1.938a1 1 0 0 0-1.366.366l-.014.027q-.014.03-.036.084a5 5 0 0 0-.102.283c-.078.233-.165.53-.258.875a61 61 0 0 0-.572 2.342l-.033.147.11-.102a61 61 0 0 0 1.743-1.667c.252-.253.465-.477.629-.66a5 5 0 0 0 .248-.304l.017-.025a1 1 0 0 0-.366-1.366M14 9a1 1 0 0 0 0-2l-.03.002a5 5 0 0 0-.386.064c-.242.049-.543.122-.888.213-.688.182-1.513.428-2.314.676L10.238 8l.144.045c.8.248 1.626.494 2.314.676.345.091.646.164.887.213a5 5 0 0 0 .386.064zM1.938 4.5a1 1 0 0 0 .393 1.38l.084.035q.108.045.283.103c.233.078.53.165.874.258a61 61 0 0 0 2.343.572l.147.033-.103-.111a61 61 0 0 0-1.666-1.742 17 17 0 0 0-.66-.629 5 5 0 0 0-.304-.248l-.025-.017a1 1 0 0 0-1.366.366m2.196-1.196.017.025a5 5 0 0 0 .248.303c.164.184.377.408.629.661A61 61 0 0 0 6.77 5.96l.111.102-.033-.147a61 61 0 0 0-.572-2.342c-.093-.345-.18-.642-.258-.875a5 5 0 0 0-.138-.367l-.014-.027a1 1 0 1 0-1.732 1m9.928 8.196a1 1 0 0 0-.366-1.366l-.027-.014a5 5 0 0 0-.367-.138c-.233-.078-.53-.165-.875-.258a61 61 0 0 0-2.342-.572l-.147-.033.102.111a61 61 0 0 0 1.667 1.742c.253.252.477.465.66.629a5 5 0 0 0 .304.248l.025.017a1 1 0 0 0 1.366-.366m-3.928 2.196a1 1 0 0 0 1.732-1l-.017-.025a5 5 0 0 0-.248-.303 17 17 0 0 0-.629-.661A61 61 0 0 0 9.23 10.04l-.111-.102.033.147a61 61 0 0 0 .572 2.342c.093.345.18.642.258.875a5 5 0 0 0 .138.367zM8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+            </svg>
+            <h5 class="mt-3">Greenery</h5>
+            <p>Elegantly landscaped green spaces.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row NIG mt-4">
+        <!-- Sui Gas -->
+        <div class="col-md-6 col-12" data-aos="fade-up">
+          <div class="facility-card p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-fire" viewBox="0 0 16 16">
+              <path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16m0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 10.5 7 10.5c-.375-1.25.5-3.25 2-3.5-.179 1-.25 2 1 3 .625.5 1 1.364 1 2.25C11 14 9.657 15 8 15"/>
+            </svg>
+            <h5 class="mt-3">Gas</h5>
+            <p>Enjoy the benefits of cylindrical Gas.</p>
+          </div>
+        </div>
+        <!-- Electricity -->
+        <div class="col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
+          <div class="facility-card p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-lightning-fill" viewBox="0 0 16 16">
+                <path d="M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641z"/>
+            </svg>
+            <h5 class="mt-4">Electricity</h5>
+            <p>Well functioning electricity units.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Location Section -->
+  <section id="location" class="container-fluid my-5 py-5">
+    <h2 class="section-title text-center" data-aos="fade-down">Our Location</h2>
+    <div class="map-responsive" data-aos="fade-up">
+      <iframe class="rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3402.3290190459516!2d73.20834607423008!3d31.48763894876089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39226f45be89cab5%3A0xb9d5489a33c15fd9!2sLawyer%20Housing%20Society%2C%20Phase%201!5e0!3m2!1sen!2sae!4v1739208693510!5m2!1sen!2sae" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="container-fluid my-5 py-5">
+    <h2 class="section-title text-center" data-aos="fade-down">Meet Our Team</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4 col-12" data-aos="fade-up">
+        <div class="card team-card text-center p-4">
+          <img src="Chairman.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Team Member 1">
+          <div class="card-body">
+            <h5 class="card-title">Mr Sohail Babar</h5>
+            <p class="card-text">Chairman</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" data-aos="fade-up" data-aos-delay="100">
+        <div class="card team-card text-center p-4">
+          <img src="other person.png" class="card-img-top rounded-circle mx-auto mt-3" alt="Team Member 2">
+          <div class="card-body">
+            <h5 class="card-title">Mr. Ali Kamona</h5>
+            <p class="card-text">Vice Chairman</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" data-aos="fade-up" data-aos-delay="200">
+        <div class="card team-card text-center p-4">
+          <img src="e_memeber.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Team Member 3">
+          <div class="card-body">
+            <h5 class="card-title">Mr Umair Shahid</h5>
+            <p class="card-text">Executive Member</p>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- <div class="PSI row justify-content-center">
+        <div class="col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
+            <div class="card team-card text-center p-4">
+              <img src="Chairman.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Team Member 1">
+              <div class="card-body">
+                <h5 class="card-title">Mr Sohail Babar</h5>
+                <p class="card-text">Chairman</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
+            <div class="card team-card text-center p-4">
+              <img src="team2.jpg" class="card-img-top rounded-circle mx-auto mt-3" alt="Team Member 2">
+              <div class="card-body">
+                <h5 class="card-title">Jane Smith</h5>
+                <p class="card-text">Marketing Head</p>
+              </div>
+            </div>
+          </div>
+    </div> -->  
+  </section>
+
+  <!-- Gallery Section (Carousel) -->
+  <section id="gallery" class="section">
+    <div class="container text-center">
+      <h2 class="section-title" data-aos="fade-down">Gallery</h2>
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="5" aria-label="Slide 6"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="6" aria-label="Slide 7"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="7" aria-label="Slide 8"></button>
+          <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="8" aria-label="Slide 9"></button>
+        </div>
+        <div class="carousel-inner rounded">
+          <div class="carousel-item active" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="1.jpg" class="d-block w-100" alt="Image 1">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="2.jpg" class="d-block w-100" alt="Image 2">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="3.jpg" class="d-block w-100" alt="Image 3">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="4.jpg" class="d-block w-100" alt="Image 4">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="5.jpg" class="d-block w-100" alt="Image 5">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="7.jpg" class="d-block w-100" alt="Image 7">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="8.jpg" class="d-block w-100" alt="Image 8">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="9.jpg" class="d-block w-100" alt="Image 9">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+          <div class="carousel-item" data-aos="fade-up">
+            <div class="img-wrapper">
+              <img src="10.jpg" class="d-block w-100" alt="Image 10">
+              <div class="img-overlay"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Controls -->
+        <div class="carousel-controls">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- About Section -->
+    <section id="about" class="container text-center my-5 py-5">
+        <h2 class="section-title" data-aos="fade-down">About Us</h2>
+        <p class="lead" data-aos="fade-up">
+          Lawyers Housing Society is a premium residential and commercial community offering a high standard of living with state-of-the-art facilities and a secure environment.
+        </p>
+    </section>
+
+
+  <!-- Footer -->
+  <footer class="footer bg-dark text-white text-center py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h4 class="text-light">Contact Us</h2>
+                <p class="lead">Phone: +92 345 7000062</p>
+                <p class="mt-4">&copy; 2025 Lawyers Housing Society. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+
+  <!-- WhatsApp Chat Button -->
+  <a href="https://wa.me/923457000062" target="_blank" class="whatsapp-chat opacity-100">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+      <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
+  </a>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    // Theme Toggle Script with Icon Animation
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+
+    themeToggleBtn.addEventListener('click', function () {
+      // Add rotation animation
+      themeIcon.classList.add('rotate');
+      // Toggle dark theme on the body
+      document.body.classList.toggle('dark-theme');
+      // After 500ms, swap the icons and remove the rotation class
+      setTimeout(() => {
+        if(document.body.classList.contains('dark-theme')) {
+          sunIcon.classList.add('d-none');
+          moonIcon.classList.remove('d-none');
+        } else {
+          moonIcon.classList.add('d-none');
+          sunIcon.classList.remove('d-none');
+        }
+        themeIcon.classList.remove('rotate');
+      }, 500);
+    });
+
+    // Navbar Scroll Effect: Toggle between "transparent" and "scrolled" classes
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > window.innerHeight - 50) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+        navbar.classList.add('transparent');
+      }
+    });
+  </script>
+</body>
+</html>
